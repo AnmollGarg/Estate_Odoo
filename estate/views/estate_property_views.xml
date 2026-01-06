@@ -1,0 +1,104 @@
+<odoo>
+    <record id="real_estate_list_view" model="ir.ui.view">
+        <field name="name">real_estate.list</field>
+        <field name="model">real_estate_property</field>
+        <field name="arch" type="xml">
+            <list string="Real Estate">
+                <field name="name"/>
+                <field name="postcode"/>
+                <field name="bedrooms"/>
+                <field name="living_area"/>
+                <field name="expected_price"/>
+                <field name="selling_price"/>
+                <field name="state"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="real_estate_search_view" model="ir.ui.view">
+        <field name="name">real_estate.search</field>
+        <field name="model">real_estate_property</field>
+        <field name="arch" type="xml">
+            <search string="Tests">
+                <field name="name"/>
+                <field name="postcode"/>
+                <field name="last_seen"/>
+
+                <filter name="filter_active" string="Active" domain="[('active', '=', True)]"/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_available" string="Available" domain="[('date_availability', '!=', False)]"/>
+
+                <separator/>
+
+                <group expand="0" string="Group By">
+                    <filter name="group_by_state" string="State" context="{'group_by': 'state'}"/>
+                    <filter name="group_by_bedrooms" string="Bedrooms" context="{'group_by': 'bedrooms'}"/>
+                    <filter name="group_by_garden" string="Garden" context="{'group_by': 'garden'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="real_estate_form_view" model="ir.ui.view">
+        <field name="name">real_estate.form</field>
+        <field name="model">real_estate_property</field>
+        <field name="arch" type="xml">
+            <form string="Test">
+                <sheet>
+                    <group>
+                        <group>
+                            <h1><field name="name"/></h1>
+                            </group>
+                        <field name="tags_id" widget="many2many_tags"/>
+                          </group>
+                     <group>
+                            <group>
+                            <field name="postcode"/>
+                            <field name="date_availability"/>
+                                <field name="property_type_id"/>
+                            <field name="state"/>
+                        </group>
+                        <group>
+                             <field name="expected_price"/>
+                            <field name="selling_price"/>
+                            <field name="last_seen"/>
+                        </group>
+                    </group>
+                    <notebook>
+
+
+                        <page string="Description">
+                            <group>
+                                <field name="description"/>
+                                <field name="bedrooms"/>
+                                <field name="living_area"/>
+                                <field name="facades"/>
+                                <field name="garage"/>
+                                <field name="garden"/>
+                                <field name="garden_area"/>
+                                <field name="garden_orientation"/>
+                                <field name="active"/>
+                            </group>
+                        </page>
+
+                             <page string="Other Information">
+                            <group>
+                                <field name="sales_person_id"/>
+                                <field name="buyer_id"/>
+
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="real_estate_action" model="ir.actions.act_window">
+        <field name="name">Properties</field>
+        <field name="res_model">real_estate_property</field>
+        <field name="view_mode">list,form,search</field>
+
+    </record>
+</odoo>

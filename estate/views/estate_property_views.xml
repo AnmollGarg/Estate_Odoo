@@ -45,6 +45,10 @@
         <field name="model">real_estate_property</field>
         <field name="arch" type="xml">
             <form string="Test">
+                <header>
+        <button name="action_sold" type="object" string="Sold"/>
+                    <button name="action_cancel" type="object" string="Cancel"/>
+    </header>
                 <sheet>
                     <group>
                         <group>
@@ -62,6 +66,7 @@
                         <group>
                              <field name="expected_price"/>
                             <field name="selling_price"/>
+                            <field name="best_offer_price"/>
                             <field name="last_seen"/>
                         </group>
                     </group>
@@ -79,6 +84,14 @@
                                 <field name="garden_area"/>
                                 <field name="garden_orientation"/>
                                 <field name="active"/>
+                                <field name="total_area"/>
+                            </group>
+                        </page>
+
+                           <page string="Offers">
+                            <group>
+                                <field name="offer_id"/>
+
                             </group>
                         </page>
 

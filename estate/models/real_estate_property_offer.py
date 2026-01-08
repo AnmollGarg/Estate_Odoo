@@ -48,7 +48,7 @@ class RealEstatePropertyOffer(models.Model):
             offer.property_id.write({
                 'selling_price': offer.price,
                 'buyer_id': offer.buyer_id.id,
-                'state': 'confirmed',
+                'state': 'offer_acc',
             })
 
 

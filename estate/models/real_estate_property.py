@@ -6,6 +6,7 @@ from odoo.exceptions import UserError , ValidationError
 class RealEstateProperty(models.Model):
     _name = 'real_estate_property'
     _description = 'RealEstate'
+    _order = 'id desc'
 
     name = fields.Char(required=True, default='Unknown')
     description = fields.Text()
@@ -22,7 +23,7 @@ class RealEstateProperty(models.Model):
     garden_area = fields.Integer()
     garden_orientation = fields.Selection([('horizontal', 'Horizontal'), ('vertical', 'Vertical')])
     active = fields.Boolean(default=False)
-    state = fields.Selection([('draft', 'Draft'), ('confirmed', 'Confirmed'), ('sold', 'Sold'), ('cancel', 'Cancelled'), ('new','New')], default='new')
+    state = fields.Selection([('new','New'), ('offer_rec', 'Offer Received'), ('offer_acc', 'Offer Accepted'), ('sold', 'Sold'), ('cancel','Cancel')], default='new')
     property_type_id = fields.Many2one('real_estate_property_type')
     buyer_id = fields.Many2one("res.partner")
     sales_person_id = fields.Many2one("res.users", string="Sales Person", index=True, tracking=True, default=lambda self: self.env.user)
@@ -30,6 +31,8 @@ class RealEstateProperty(models.Model):
     offer_id = fields.One2many("real_estate_property_offer", "property_id")
     total_area = fields.Integer(compute='_compute_total_area')
     best_offer_price = fields.Float(compute='_compute_best_offer_price')
+
+
 
     #sum of living and garden area = total area
     @api.depends('living_area', 'garden_area')
@@ -83,6 +86,5 @@ class RealEstateProperty(models.Model):
                     raise ValidationError(
                         "Selling price must be at least 90% of the expected price."
                     )
-
 
 

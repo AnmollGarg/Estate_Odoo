@@ -46,25 +46,27 @@
         <field name="arch" type="xml">
             <form string="Test">
                 <header>
-        <button name="action_sold" type="object" string="Sold"/>
-                    <button name="action_cancel" type="object" string="Cancel"/>
-    </header>
+                    <field name="state" widget="statusbar" statusbar_visible="new,offer_rec,offer_acc,sold,cancel"/>
+                     <button name="action_sold" type="object" string="Sold" invisible="state in ('sold', 'cancel')"/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="state in ('sold', 'cancel')"/>
+                </header>
                 <sheet>
                     <group>
                         <group>
-                            <h1><field name="name"/></h1>
-                            </group>
-                        <field name="tags_id" widget="many2many_tags"/>
-                          </group>
-                     <group>
-                            <group>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </group>
+                        <field name="tags_id" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                    </group>
+                    <group>
+                        <group>
                             <field name="postcode"/>
                             <field name="date_availability"/>
-                                <field name="property_type_id"/>
-                            <field name="state"/>
+                            <field name="property_type_id" options="{'no_create': true, 'no_open': true}"/>
                         </group>
                         <group>
-                             <field name="expected_price"/>
+                            <field name="expected_price"/>
                             <field name="selling_price"/>
                             <field name="best_offer_price"/>
                             <field name="last_seen"/>
@@ -81,21 +83,21 @@
                                 <field name="facades"/>
                                 <field name="garage"/>
                                 <field name="garden"/>
-                                <field name="garden_area"/>
-                                <field name="garden_orientation"/>
+                                <field name="garden_area" invisible="not garden"/>
+                                <field name="garden_orientation" invisible="not garden"/>
                                 <field name="active"/>
                                 <field name="total_area"/>
                             </group>
                         </page>
 
-                           <page string="Offers">
+                        <page string="Offers">
                             <group>
-                                <field name="offer_id"/>
+                                <field name="offer_id" readonly = "state in ('offer_acc', 'sold', 'cancel')"/>
 
                             </group>
                         </page>
 
-                             <page string="Other Information">
+                        <page string="Other Information">
                             <group>
                                 <field name="sales_person_id"/>
                                 <field name="buyer_id"/>

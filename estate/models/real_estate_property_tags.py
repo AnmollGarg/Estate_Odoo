@@ -5,5 +5,6 @@ class RealEstatePropertyTags(models.Model):
     _description = 'RealEstatePropertyTags'
 
     name = fields.Char(required=True)
+    color = fields.Integer()
     _sql_constraints = [
         ('check_unique_tags_name', 'UNIQUE(name)', 'The Tags Name will be unique')]

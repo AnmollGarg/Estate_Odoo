@@ -87,4 +87,14 @@ class RealEstateProperty(models.Model):
                         "Selling price must be at least 90% of the expected price."
                     )
 
+    @api.depends('offer_id')
+    def _compute_best_offer_price(self):
+        for record in self:
+            valid_offers = record.offer_id.filtered(lambda o: o.status != 'refused')
+            record.best_offer_price = max(valid_offers.mapped('price'), default=0.0)
+            # Mark property as offer received if any valid offer exists and state is 'new'
+            if valid_offers and record.state == 'new':
+                record.state = 'offer_rec'
+
+
 

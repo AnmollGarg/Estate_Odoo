@@ -3,12 +3,15 @@
         <field name="name">real_estate.list</field>
         <field name="model">real_estate_property</field>
         <field name="arch" type="xml">
-            <list string="Real Estate">
+            <list string="Real Estate"
+                  decoration-success="state=='offer_rec' or state=='offer_acc'"
+                  decoration-bf="state=='offer_acc'" decoration-muted="state=='sold'">
                 <field name="name"/>
                 <field name="postcode"/>
                 <field name="bedrooms"/>
                 <field name="living_area"/>
                 <field name="expected_price"/>
+                <field name="date_availability" optional="hide"/>
                 <field name="selling_price"/>
                 <field name="state"/>
                 <field name="active"/>

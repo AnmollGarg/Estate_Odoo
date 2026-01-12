@@ -11,6 +11,7 @@ class RealEstatePropertyOffer(models.Model):
 
     price = fields.Float(string='Price')
     property_id = fields.Many2one("real_estate_property", string='Property')
+    property_type_id = fields.Many2one("real_estate_property_type", related="property_id.property_type_id", store=True)
 
     status = fields.Selection([('accepted', 'Accepted'),('refused', 'Refused')], string='Status')
     buyer_id = fields.Many2one('res.partner', string='Buyer')
@@ -58,5 +59,3 @@ class RealEstatePropertyOffer(models.Model):
 
     _sql_constraints = [
         ('check_offer_price_positive', 'CHECK(price > 0)', 'The offer price will be in positive only')]
-
-

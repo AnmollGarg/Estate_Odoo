@@ -22,7 +22,7 @@ class RealEstateProperty(models.Model):
     garden = fields.Boolean()
     garden_area = fields.Integer()
     garden_orientation = fields.Selection([('horizontal', 'Horizontal'), ('vertical', 'Vertical')])
-    active = fields.Boolean(default=False)
+    active = fields.Boolean(default=True)
     state = fields.Selection([('new','New'), ('offer_rec', 'Offer Received'), ('offer_acc', 'Offer Accepted'), ('sold', 'Sold'), ('cancel','Cancel')], default='new')
     property_type_id = fields.Many2one('real_estate_property_type')
     buyer_id = fields.Many2one("res.partner")
@@ -95,6 +95,15 @@ class RealEstateProperty(models.Model):
             # Mark property as offer received if any valid offer exists and state is 'new'
             if valid_offers and record.state == 'new':
                 record.state = 'offer_rec'
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_if_not_new_or_cancel(self):
+        for record in self:
+            if record.state not in ('new', 'cancel'):
+                raise UserError(
+                    "You can only delete properties in New or Cancelled state."
+                )
+
 
 
 

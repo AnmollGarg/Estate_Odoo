@@ -9,6 +9,7 @@
         "views/estate_property_tags_views.xml",
         "views/estate_menus.xml",
         "views/estate_property_offer_views.xml",
+        "views/res_users_views.xml",
     #     "data/master_data.xml",  # Split the data in multiple files depending on the model
     ],
     "demo": [
